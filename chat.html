@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Ride Chat</title>
+
+<link rel="stylesheet"
+href="css/style.css">
+
+<style>
+
+body{
+background:#f8fff8;
+}
+
+.chat-box{
+max-width:700px;
+margin:50px auto;
+background:white;
+padding:30px;
+border-radius:20px;
+box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
+
+.messages{
+height:350px;
+overflow:auto;
+padding:10px;
+}
+
+.msg{
+padding:12px;
+margin:10px;
+border-radius:12px;
+width:fit-content;
+max-width:70%;
+}
+
+.user{
+margin-left:auto;
+background:#d8ffe0;
+}
+
+.driver{
+background:#f2f2f2;
+}
+
+.bottom{
+display:flex;
+gap:10px;
+}
+
+input{
+flex:1;
+padding:12px;
+}
+
+button{
+padding:12px 20px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="chat-box">
+
+<h2>
+
+💬 Ride Chat
+
+</h2>
+
+
+<div
+class="messages"
+id="messages">
+
+<div class="msg driver">
+
+🚗 Driver:
+Hello, I am on the way.
+
+</div>
+
+</div>
+
+
+<div class="bottom">
+
+<input
+id="msg"
+placeholder="Type message">
+
+
+<button
+onclick="send()">
+
+Send
+
+</button>
+
+</div>
+
+</div>
+
+
+
+<script>
+
+function send(){
+
+let text=
+document
+.getElementById(
+"msg"
+)
+.value;
+
+if(text==="")
+return;
+
+
+let replies=[
+
+"👍 Received",
+
+"🚗 I am nearby",
+
+"⏳ Reaching soon",
+
+"📍 Sharing location",
+
+"👌 Okay",
+
+"🚦 Stuck at signal",
+
+"🚗 Arriving"
+
+];
+
+
+let box=
+document
+.getElementById(
+"messages"
+);
+
+
+box.innerHTML+=`
+
+<div class="msg user">
+
+${text}
+
+</div>
+
+`;
+
+
+document
+.getElementById(
+"msg"
+)
+.value="";
+
+
+setTimeout(()=>{
+
+let random=
+
+replies[
+Math.floor(
+Math.random()
+*
+replies.length
+)
+];
+
+
+box.innerHTML+=`
+
+<div class="msg driver">
+
+${random}
+
+</div>
+
+`;
+
+
+box.scrollTop=
+
+box.scrollHeight;
+
+},1000);
+
+}
+
+</script>
+
+
+</body>
+
+</html>

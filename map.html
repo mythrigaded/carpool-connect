@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Ride Tracking | CarPool Connect</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+#map{
+height:500px;
+margin:40px;
+border-radius:12px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light custom-navbar">
+
+<div class="container">
+
+<a class="navbar-brand brand-logo" href="index.html">
+🚗 CarPool Connect
+</a>
+
+</div>
+
+</nav>
+
+<h2 style="text-align:center;margin-top:20px;">Ride Tracking</h2>
+<p style="text-align:center;font-size:18px;">
+<span id="etaText">
+Driver arriving in: <span id="eta">5</span> minutes
+</span>
+</p>
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<script>
+
+var map = L.map('map').setView([12.9716,77.5946],13);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+maxZoom:19
+}).addTo(map);
+
+var passenger = L.marker([12.9716,77.5946]).addTo(map)
+.bindPopup("Passenger Location")
+.openPopup();
+
+var carIcon = L.divIcon({
+html:"🚗",
+iconSize:[30,30],
+className:''
+});
+
+var driver = L.marker([12.975,77.6],{icon:carIcon}).addTo(map)
+.bindPopup("Driver");
+var lat = 12.975;
+var lng = 77.6;
+
+var stopped = false;
+
+setInterval(function(){
+
+// traffic signal location
+if(lat < 12.9735 && !stopped){
+
+stopped = true;
+
+driver.bindPopup("🚦 Driver stopped at signal").openPopup();
+
+setTimeout(function(){
+
+driver.closePopup();
+stopped = false;
+
+},4000);
+
+return;
+
+}
+
+lat -= 0.0002;
+lng -= 0.0002;
+
+driver.setLatLng([lat,lng]);
+
+},1000);
+let eta = 5;
+
+setInterval(function(){
+
+if(eta > 0){
+
+eta--;
+
+document.getElementById("eta").textContent = eta;
+
+}
+
+else{
+
+document.getElementById("etaText").innerHTML =
+"<b style='color:green;'>🚗 Driver Arrived</b>";
+
+}
+
+},3000);
+</script>
+
+</body>
+
+</html>

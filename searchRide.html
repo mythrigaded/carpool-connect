@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Search Ride | CarPool Connect</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light custom-navbar">
+
+<div class="container">
+
+<a class="navbar-brand brand-logo" href="index.html">
+🚗 CarPool Connect
+</a>
+
+<ul class="navbar-nav ms-auto align-items-center">
+
+<li class="nav-item">
+<a class="nav-link nav-item-link" href="index.html">Home</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link nav-item-link" href="#">Search Ride</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link nav-item-link" href="postRide.html">Post Ride</a>
+</li>
+
+<li class="nav-item">
+<span id="userArea"></span>
+</li>
+
+</ul>
+
+</div>
+
+</nav>
+
+
+<section class="search-section">
+
+<div class="container">
+
+<h2 class="section-title text-center">Find a Ride</h2>
+
+<div class="search-box">
+
+<input type="text" id="pickupInput" placeholder="Pickup Location">
+
+<input type="text" id="destinationInput" placeholder="Destination">
+
+<input type="date">
+
+<button class="search-btn" onclick="searchRides()">Search Ride</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section class="rides-list">
+
+<div class="container">
+
+<h3 class="text-center mb-4">Available Rides</h3>
+
+
+<div class="ride-card" data-from="MG Road" data-to="Electronic City">
+<h5>🚗 Driver: Rahul Sharma</h5>
+<p>🚘 Vehicle: Swift</p>
+<p>📍 MG Road → Electronic City</p>
+<p>💺 Seats Available: 2</p>
+<p>💰 Price: ₹150</p>
+<a href="booking.html?driver=Rahul%20Sharma&vehicle=Swift" class="book-btn">Book Ride</a>
+</div>
+
+
+<div class="ride-card" data-from="Indiranagar" data-to="Whitefield">
+<h5>🚙 Driver: Ankit Kumar</h5>
+<p>🚘 Vehicle: SUV</p>
+<p>📍 Indiranagar → Whitefield</p>
+<p>💺 Seats Available: 3</p>
+<p>💰 Price: ₹120</p>
+<a href="booking.html?driver=Ankit%20Kumar&vehicle=SUV" class="book-btn">Book Ride</a>
+</div>
+
+
+<div class="ride-card" data-from="Koramangala" data-to="Hebbal">
+<h5>🚗 Driver: Priya Mehta</h5>
+<p>🚘 Vehicle: Hyundai i20</p>
+<p>📍 Koramangala → Hebbal</p>
+<p>💺 Seats Available: 2</p>
+<p>💰 Price: ₹170</p>
+<a href="booking.html?driver=Priya%20Mehta&vehicle=Hyundai%20i20" class="book-btn">Book Ride</a>
+</div>
+
+
+<div class="ride-card" data-from="Jayanagar" data-to="Airport">
+<h5>🚙 Driver: Arjun Reddy</h5>
+<p>🚘 Vehicle: XUV500</p>
+<p>📍 Jayanagar → Airport</p>
+<p>💺 Seats Available: 4</p>
+<p>💰 Price: ₹250</p>
+<a href="booking.html?driver=Arjun%20Reddy&vehicle=XUV500" class="book-btn">Book Ride</a>
+</div>
+
+
+<div class="ride-card" data-from="BTM" data-to="Silk Board">
+<h5>🏍 Driver: Karan Singh</h5>
+<p>🚘 Vehicle: Bike</p>
+<p>📍 BTM → Silk Board</p>
+<p>💺 Seats Available: 1</p>
+<p>💰 Price: ₹60</p>
+<a href="booking.html?driver=Karan%20Singh&vehicle=Bike" class="book-btn">Book Ride</a>
+</div>
+
+
+<div class="ride-card" data-from="Yelahanka" data-to="MG Road">
+<h5>🚗 Driver: Sneha Patel</h5>
+<p>🚘 Vehicle: Honda City</p>
+<p>📍 Yelahanka → MG Road</p>
+<p>💺 Seats Available: 3</p>
+<p>💰 Price: ₹140</p>
+<a href="booking.html?driver=Sneha%20Patel&vehicle=Honda%20City" class="book-btn">Book Ride</a>
+</div>
+
+
+<div class="ride-card" data-from="HSR Layout" data-to="Electronic City">
+<h5>🚙 Driver: Vikram Nair</h5>
+<p>🚘 Vehicle: Fortuner</p>
+<p>📍 HSR Layout → Electronic City</p>
+<p>💺 Seats Available: 4</p>
+<p>💰 Price: ₹220</p>
+<a href="booking.html?driver=Vikram%20Nair&vehicle=Fortuner" class="book-btn">Book Ride</a>
+</div>
+
+
+<div class="ride-card" data-from="Marathahalli" data-to="Whitefield">
+<h5>🏍 Driver: Aman Gupta</h5>
+<p>🚘 Vehicle: Bike</p>
+<p>📍 Marathahalli → Whitefield</p>
+<p>💺 Seats Available: 1</p>
+<p>💰 Price: ₹70</p>
+<a href="booking.html?driver=Aman%20Gupta&vehicle=Bike" class="book-btn">Book Ride</a>
+</div>
+
+
+<div class="ride-card" data-from="Banashankari" data-to="Majestic">
+<h5>🚗 Driver: Neha Kapoor</h5>
+<p>🚘 Vehicle: Toyota Etios</p>
+<p>📍 Banashankari → Majestic</p>
+<p>💺 Seats Available: 2</p>
+<p>💰 Price: ₹130</p>
+<a href="booking.html?driver=Neha%20Kapoor&vehicle=Toyota%20Etios" class="book-btn">Book Ride</a>
+</div>
+
+
+</div>
+
+</section>
+
+
+<script>
+
+function searchRides(){
+
+let pickup = document.getElementById("pickupInput").value.toLowerCase();
+let destination = document.getElementById("destinationInput").value.toLowerCase();
+
+let rides = document.querySelectorAll(".ride-card");
+
+rides.forEach(function(ride){
+
+let from = ride.getAttribute("data-from").toLowerCase();
+let to = ride.getAttribute("data-to").toLowerCase();
+
+if(from.includes(pickup) && to.includes(destination)){
+ride.style.display = "block";
+}
+else{
+ride.style.display = "none";
+}
+
+});
+
+}
+
+</script>
+<script>
+
+async function loadRides(){
+
+let response=
+await fetch(
+"http://localhost:3000/rides"
+);
+
+let rides=
+await response.json();
+
+console.log(
+"Backend rides:",
+rides
+);
+
+/*
+Later we will insert into
+existing cards
+WITHOUT changing UI
+*/
+
+}
+
+loadRides();
+</script>
+<script>
+
+let user=
+localStorage.getItem("carpoolUser");
+
+if(user){
+
+let nav=
+document.getElementById("userArea");
+
+if(nav){
+
+nav.innerHTML=
+`
+👋 Hello, ${user}
+|
+<button
+onclick="logoutUser()"
+style="
+border:none;
+background:none;
+color:black;
+">
+Logout
+</button>
+`;
+
+}
+
+}
+
+function logoutUser(){
+
+localStorage.removeItem(
+"carpoolUser"
+);
+
+window.location=
+"login.html";
+
+}
+
+</script>
+<script>
+
+function navbar(){
+
+let user=
+
+localStorage.getItem(
+"carpoolUser"
+);
+
+let area=
+
+document.getElementById(
+"userArea"
+);
+
+if(!area)
+return;
+
+
+if(user){
+
+area.innerHTML=
+
+`
+👋 Hello ${user}
+
+<button
+
+onclick="logout()"
+
+style="
+margin-left:10px;
+background:#dc3545;
+color:white;
+border:none;
+padding:8px 14px;
+border-radius:8px;
+">
+
+Logout
+
+</button>
+`;
+
+}
+
+else{
+
+area.innerHTML=
+
+`
+
+<a
+class="login-btn"
+href="login.html">
+
+Login
+
+</a>
+
+`;
+
+}
+
+}
+
+
+
+function logout(){
+
+localStorage.removeItem(
+"carpoolUser"
+);
+
+localStorage.removeItem(
+"role"
+);
+
+window.location=
+
+"index.html";
+
+}
+
+
+
+navbar();
+
+</script>
+</body>
+</html>

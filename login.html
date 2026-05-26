@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Login | CarPool Connect</title>
+
+<link rel="stylesheet"
+href="css/style.css">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+rel="stylesheet">
+
+</head>
+
+
+<body>
+
+
+<nav class="navbar navbar-expand-lg navbar-light custom-navbar">
+
+<div class="container">
+
+<a class="navbar-brand brand-logo"
+href="index.html">
+
+🚗 CarPool Connect
+
+</a>
+
+</div>
+
+</nav>
+
+
+
+<section class="login-section">
+
+<div class="login-card">
+
+<h2>
+
+Welcome Back
+
+</h2>
+
+
+<input
+
+id="email"
+
+type="email"
+
+placeholder="Email Address">
+
+
+<input
+
+id="password"
+
+type="password"
+
+placeholder="Password">
+
+
+<button
+
+class="login-submit"
+
+type="button"
+
+onclick="loginUser()">
+
+Login
+
+</button>
+
+
+<p class="register-text">
+
+No account?
+
+<a href="register.html">
+
+Register
+
+</a>
+
+</p>
+
+</div>
+
+</section>
+
+
+
+<script>
+if(localStorage.getItem("carpoolUser")){
+window.location="index.html";
+}
+async function loginUser(){
+
+let email =
+
+document
+
+.getElementById(
+
+"email"
+
+).value;
+
+
+
+let password =
+
+document
+
+.getElementById(
+
+"password"
+
+).value;
+
+
+
+let response =
+
+await fetch(
+
+"http://localhost:3000/login",
+
+{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":
+
+"application/json"
+
+},
+
+body:
+
+JSON.stringify({
+
+email,
+
+password
+
+})
+
+}
+
+);
+
+
+
+let data =
+
+await response.json();
+
+
+
+if(data.success){
+
+localStorage
+
+.setItem(
+
+"carpoolUser",
+
+data.name
+
+);
+
+alert(
+
+"✅ Login Successful"
+
+);
+
+window.location.href=
+
+"role.html";
+
+}
+
+else{
+
+alert(
+
+"❌ User Not Found"
+
+);
+
+}
+
+}
+
+</script>
+
+
+</body>
+
+</html>

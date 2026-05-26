@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Booking</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+
+<section class="login-section">
+
+<div class="login-card">
+
+<h2>
+
+Confirm Ride
+
+</h2>
+
+
+<input
+id="name"
+placeholder="Passenger Name">
+
+
+<input
+id="phone"
+placeholder="Phone Number">
+
+
+<select id="vehicle">
+
+<option value="22">
+
+Swift (22 km/L)
+
+</option>
+
+<option value="18">
+
+SUV (18 km/L)
+
+</option>
+
+<option value="20">
+
+Honda City (20 km/L)
+
+</option>
+
+<option value="45">
+
+Bike (45 km/L)
+
+</option>
+
+</select>
+
+
+<input
+id="distance"
+type="number"
+placeholder="Distance (km)">
+
+
+
+<div
+id="calcResult"
+
+style="margin:20px 0;">
+
+</div>
+
+
+<button
+class="login-submit"
+
+type="button"
+
+onclick="bookRide()">
+
+Confirm Booking
+
+</button>
+
+
+</div>
+
+</section>
+
+
+
+<script>
+
+async function bookRide(){
+
+let name=
+
+document
+.getElementById(
+"name"
+)
+.value;
+
+
+let phone=
+
+document
+.getElementById(
+"phone"
+)
+.value;
+
+
+let mileage=
+
+Number(
+
+document
+.getElementById(
+"vehicle"
+)
+.value
+
+);
+
+
+let distance=
+
+Number(
+
+document
+.getElementById(
+"distance"
+)
+.value
+
+);
+
+
+let petrol=
+
+103;
+
+
+let fuel=
+
+distance
+/
+mileage;
+
+
+let cost=
+
+fuel
+*
+petrol;
+
+
+let co2=
+
+fuel
+*
+2.31;
+
+
+
+document
+
+.getElementById(
+"calcResult"
+)
+
+.innerHTML=
+
+`
+
+🚗 Fuel Used:
+${fuel.toFixed(1)} L
+
+<br><br>
+
+💸 Fuel Cost:
+
+₹${cost.toFixed(0)}
+
+<br><br>
+
+🌱 CO₂:
+
+${co2.toFixed(1)} kg
+
+`;
+
+
+
+let response=
+
+await fetch(
+
+"http://localhost:3000/book",
+
+{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":
+
+"application/json"
+
+},
+
+body:
+
+JSON.stringify({
+
+name,
+
+phone,
+
+distance,
+
+fuel,
+
+cost,
+
+co2,
+
+time:
+
+new Date()
+
+})
+
+}
+
+);
+
+
+
+let data=
+
+await response.json();
+
+
+
+setTimeout(()=>{
+
+alert(
+data.message
+);
+
+window.location.href=
+
+"map.html";
+
+},1200);
+
+}
+
+</script>
+
+
+</body>
+
+</html>
