@@ -127,31 +127,20 @@ try{
 
 let response =
 await fetch(
-
-"http://https://carpoolconnect-backend.onrender.com/register",
-
+"https://carpool-backend-t4ar.onrender.com/register",
 {
-
 method:"POST",
-
 headers:{
 "Content-Type":"application/json"
 },
-
-body:
-JSON.stringify({
-
+body:JSON.stringify({
 name,
 email,
 phone,
 password
-
 })
-
 }
-
 );
-
 
 let data =
 await response.json();
