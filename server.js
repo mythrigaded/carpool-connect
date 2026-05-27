@@ -155,31 +155,56 @@ res.json(rides);
 
 
 // Booking
-app.post("/book", async (req, res) => {
+app.post(
+"/book",
 
-try {
+async(req,res)=>{
+
+try{
 
 await Booking.create({
-...req.body,
-time: new Date()
+
+name:req.body.name,
+
+phone:req.body.phone,
+
+distance:Number(req.body.distance),
+
+fuel:Number(req.body.fuel),
+
+cost:Number(req.body.cost),
+
+co2:Number(req.body.co2),
+
+time:new Date()
+
 });
 
 res.json({
-message: "Ride Confirmed"
+
+message:
+"✅ Ride Confirmed"
+
 });
 
 }
 
-catch {
+catch(err){
 
-res.json({
-message: "Booking Failed"
+console.log(err);
+
+res.status(500).json({
+
+message:
+"Booking Failed"
+
 });
 
 }
 
-});
+}
 
+);
 
 // Server
 const PORT = process.env.PORT || 3000;
