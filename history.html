@@ -17,12 +17,13 @@ rel="stylesheet">
 
 <div class="container mt-5">
 
-<h1 class="text-center mb-5">
+<h1 class="text-center">
 
 Ride History
 
 </h1>
 
+<br>
 
 <div class="card p-4 mb-4">
 
@@ -62,6 +63,21 @@ Loading...
 
 <script>
 
+let currentUser=
+localStorage.getItem(
+"carpoolUser"
+);
+
+if(
+!currentUser
+){
+
+window.location=
+"login.html";
+
+}
+
+
 async function loadHistory(){
 
 try{
@@ -74,44 +90,46 @@ await fetch(
 let rides=
 await response.json();
 
+let myRides=
+rides.filter(
+
+ride=>
+
+ride.driver===currentUser
+
+);
+
 let posted=
 document.getElementById(
 "posted"
 );
 
+posted.innerHTML="";
+
 if(
-rides.length===0
+myRides.length===0
 ){
 
 posted.innerHTML=
-"No rides posted";
-
-return;
+"No rides";
 
 }
+else{
 
-posted.innerHTML="";
-
-rides.forEach(
+myRides.forEach(
 
 ride=>{
 
 posted.innerHTML+=`
 
-<div
-style="
-padding:10px;
-border-bottom:1px solid #ddd;
-">
+<div>
 
 <b>${ride.driver}</b>
 
 <br>
 
 ${ride.pickup}
-
 →
-
 ${ride.destination}
 
 <br>
@@ -123,6 +141,8 @@ ${ride.seats}
 
 ₹${ride.price}
 
+<hr>
+
 </div>
 
 `;
@@ -132,6 +152,8 @@ ${ride.seats}
 );
 
 }
+
+}
 catch{
 
 document
@@ -139,8 +161,7 @@ document
 "posted"
 )
 .innerHTML=
-
-"Cannot load rides";
+"Cannot load";
 
 }
 
@@ -149,8 +170,7 @@ document
 "booked"
 )
 .innerHTML=
-
-"Bookings saved";
+"No rides booked";
 
 }
 
