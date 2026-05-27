@@ -1,15 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 
-<title>Booking</title>
+<meta charset="UTF-8">
 
-<link rel="stylesheet" href="css/style.css">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Booking | CarPool Connect</title>
+
+<link rel="stylesheet"
+href="css/style.css">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+rel="stylesheet">
 
 </head>
 
 <body>
+
+<nav class="navbar navbar-expand-lg navbar-light custom-navbar">
+
+<div class="container">
+
+<a class="navbar-brand brand-logo"
+href="index.html">
+
+🚗 CarPool Connect
+
+</a>
+
+</div>
+
+</nav>
 
 
 <section class="login-section">
@@ -22,220 +46,161 @@ Confirm Ride
 
 </h2>
 
-
 <input
 id="name"
-placeholder="Passenger Name">
-
+type="text"
+placeholder="Name">
 
 <input
 id="phone"
-placeholder="Phone Number">
-
+type="tel"
+placeholder="Phone">
 
 <select id="vehicle">
 
-<option value="22">
-
-Swift (22 km/L)
-
-</option>
-
-<option value="18">
-
-SUV (18 km/L)
-
-</option>
-
-<option value="20">
-
-Honda City (20 km/L)
-
-</option>
-
-<option value="45">
-
-Bike (45 km/L)
-
-</option>
+<option value="18">SUV (18 km/L)</option>
+<option value="22">Sedan (22 km/L)</option>
+<option value="30">Bike (30 km/L)</option>
 
 </select>
-
 
 <input
 id="distance"
 type="number"
-placeholder="Distance (km)">
+placeholder="Distance">
 
+<div id="result">
 
+<p id="fuel">
+🚗 Fuel Used: 0 L
+</p>
 
-<div
-id="calcResult"
+<p id="cost">
+💸 Fuel Cost: ₹0
+</p>
 
-style="margin:20px 0;">
+<p id="co2">
+🌱 CO₂: 0 kg
+</p>
 
 </div>
 
-
 <button
 class="login-submit"
-
-type="button"
-
-onclick="bookRide()">
+onclick="confirmBooking()">
 
 Confirm Booking
 
 </button>
-
 
 </div>
 
 </section>
 
 
-
 <script>
 
-async function bookRide(){
-
-let name=
-
 document
-.getElementById(
-"name"
-)
-.value;
+.getElementById("distance")
+.addEventListener(
 
+"input",
 
-let phone=
-
-document
-.getElementById(
-"phone"
-)
-.value;
-
-
-let mileage=
-
-Number(
-
-document
-.getElementById(
-"vehicle"
-)
-.value
+calculate
 
 );
 
-
-let distance=
-
-Number(
-
 document
-.getElementById(
-"distance"
-)
-.value
+.getElementById("vehicle")
+.addEventListener(
+
+"change",
+
+calculate
 
 );
 
+function calculate(){
 
-let petrol=
+let distance =
+Number(
+document.getElementById("distance").value
+);
 
-103;
+let mileage =
+Number(
+document.getElementById("vehicle").value
+);
 
+let fuel =
+(distance/mileage).toFixed(1);
 
-let fuel=
+let cost =
+(fuel*100).toFixed(0);
 
-distance
-/
-mileage;
+let co2 =
+(fuel*2.3).toFixed(1);
 
+document.getElementById(
+"fuel"
+).innerHTML=
+"🚗 Fuel Used: "+fuel+" L";
 
-let cost=
+document.getElementById(
+"cost"
+).innerHTML=
+"💸 Fuel Cost: ₹"+cost;
 
-fuel
-*
-petrol;
+document.getElementById(
+"co2"
+).innerHTML=
+"🌱 CO₂: "+co2+" kg";
 
-
-let co2=
-
-fuel
-*
-2.31;
-
-
-
-document
-
-.getElementById(
-"calcResult"
-)
-
-.innerHTML=
-
-`
-
-🚗 Fuel Used:
-${fuel.toFixed(1)} L
-
-<br><br>
-
-💸 Fuel Cost:
-
-₹${cost.toFixed(0)}
-
-<br><br>
-
-🌱 CO₂:
-
-${co2.toFixed(1)} kg
-
-`;
+}
 
 
+async function confirmBooking(){
 
-let response=
+let name =
+document.getElementById("name").value;
 
+let phone =
+document.getElementById("phone").value;
+
+let distance =
+document.getElementById("distance").value;
+
+let fuel =
+document.getElementById("fuel").innerText;
+
+let cost =
+document.getElementById("cost").innerText;
+
+let co2 =
+document.getElementById("co2").innerText;
+
+
+let response =
 await fetch(
 
-"http://https://carpoolconnect-backend.onrender.com/book",
+"https://carpool-backend-t4ar.onrender.com/book",
 
 {
 
 method:"POST",
 
 headers:{
-
-"Content-Type":
-
-"application/json"
-
+"Content-Type":"application/json"
 },
 
-body:
-
-JSON.stringify({
+body:JSON.stringify({
 
 name,
-
 phone,
-
 distance,
-
 fuel,
-
 cost,
-
-co2,
-
-time:
-
-new Date()
+co2
 
 })
 
@@ -243,30 +208,23 @@ new Date()
 
 );
 
-
-
-let data=
-
+let data =
 await response.json();
-
-
-
-setTimeout(()=>{
 
 alert(
 data.message
 );
 
+if(response.ok){
+
 window.location.href=
+"history.html";
 
-"map.html";
-
-},1200);
+}
 
 }
 
 </script>
-
 
 </body>
 
