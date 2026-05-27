@@ -100,95 +100,52 @@ Register
 
 
 <script>
+
 if(localStorage.getItem("carpoolUser")){
 window.location="index.html";
 }
+
 async function loginUser(){
 
 let email =
-
-document
-
-.getElementById(
-
-"email"
-
-).value;
-
-
+document.getElementById("email").value;
 
 let password =
-
-document
-
-.getElementById(
-
-"password"
-
-).value;
-
-
+document.getElementById("password").value;
 
 let response =
-
 await fetch(
-
-"http://https://carpoolconnect-backend.onrender.com/login",
-
+"https://carpool-backend-t4ar.onrender.com/login",
 {
-
 method:"POST",
 
 headers:{
-
-"Content-Type":
-
-"application/json"
-
+"Content-Type":"application/json"
 },
 
-body:
-
-JSON.stringify({
-
+body:JSON.stringify({
 email,
-
 password
-
 })
 
 }
-
 );
 
-
-
 let data =
-
 await response.json();
-
-
 
 if(data.success){
 
-localStorage
-
-.setItem(
-
+localStorage.setItem(
 "carpoolUser",
-
 data.name
-
 );
 
 alert(
-
 "✅ Login Successful"
-
 );
 
 window.location.href=
-
 "role.html";
 
 }
@@ -196,9 +153,7 @@ window.location.href=
 else{
 
 alert(
-
 "❌ User Not Found"
-
 );
 
 }
