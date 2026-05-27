@@ -5,32 +5,58 @@
 
 <title>Post Ride</title>
 
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet"
+href="css/style.css">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+rel="stylesheet">
 
 </head>
 
 <body>
 
+<nav class="navbar navbar-light custom-navbar">
+
+<div class="container">
+
+<a class="navbar-brand"
+href="index.html">
+
+🚗 CarPool Connect
+
+</a>
+
+</div>
+
+</nav>
+
+
 <section class="login-section">
 
-<form class="post-card">
+<div class="login-card">
 
 <h2>Offer Ride</h2>
 
 <input
+id="driver"
+placeholder="Driver Name">
+
+<input
+id="vehicle"
+placeholder="Vehicle">
+
+<input
 id="pickup"
-type="text"
-placeholder="Pickup Location">
+placeholder="Pickup">
 
 <input
 id="destination"
-type="text"
 placeholder="Destination">
 
 <input
 id="seats"
 type="number"
-placeholder="Seats Available">
+placeholder="Seats">
 
 <input
 id="price"
@@ -38,125 +64,63 @@ type="number"
 placeholder="Price">
 
 <button
-type="button"
-class="post-btn"
+class="login-submit"
 onclick="postRide()">
 
 Post Ride
 
 </button>
 
-</form>
+</div>
 
 </section>
-
-
-<div
-id="successScreen"
-class="success-screen">
-
-<div class="success-box">
-
-<div class="checkmark">
-
-✔
-
-</div>
-
-<h2>
-
-Ride Posted Successfully
-
-</h2>
-
-<p>
-
-Your ride is now available.
-
-</p>
-
-</div>
-
-</div>
-
 
 
 <script>
 
 async function postRide(){
 
-let pickup=
-document
-.getElementById(
-"pickup"
-)
-.value
-.trim();
-
-
-let destination=
-document
-.getElementById(
-"destination"
-)
-.value
-.trim();
-
-
-let seats=
-document
-.getElementById(
-"seats"
-)
-.value;
-
-
-let price=
-document
-.getElementById(
-"price"
-)
-.value;
-
-
-
-if(
-
-pickup===""
-
-||
-
-destination===""
-
-||
-
-seats===""
-
-||
-
-price===""
-
-){
-
-alert(
-
-"Fill all fields"
-
-);
-
-return;
-
-}
-
-
-
 try{
 
-let response=
+let data={
 
+driver:
+document.getElementById(
+"driver"
+).value,
+
+vehicle:
+document.getElementById(
+"vehicle"
+).value,
+
+pickup:
+document.getElementById(
+"pickup"
+).value,
+
+destination:
+document.getElementById(
+"destination"
+).value,
+
+seats:
+document.getElementById(
+"seats"
+).value,
+
+price:
+document.getElementById(
+"price"
+).value
+
+};
+
+
+let response=
 await fetch(
 
-"http://https://carpoolconnect-backend.onrender.com/ride",
+"https://carpool-backend-t4ar.onrender.com/ride",
 
 {
 
@@ -165,84 +129,43 @@ method:"POST",
 headers:{
 
 "Content-Type":
-
 "application/json"
 
 },
 
 body:
-
-JSON.stringify({
-
-driver:
-
-localStorage.getItem(
-"carpoolUser"
+JSON.stringify(
+data
 )
-
-||
-
-"Driver",
-
-
-vehicle:
-
-"Car",
-
-
-pickup,
-
-destination,
-
-seats,
-
-price
-
-})
 
 }
 
 );
 
 
-
-let data=
+let result=
 await response.json();
 
-console.log(data);
-
-
-
-document
-
-.getElementById(
-"successScreen"
-)
-
-.classList
-
-.add(
-"active"
+alert(
+result.message
 );
 
 
-
-setTimeout(()=>{
+if(
+response.ok
+){
 
 window.location.href=
+"searchRide.html";
 
-"dashboard.html";
-
-},2500);
+}
 
 }
 
 catch{
 
 alert(
-
 "Backend not connected"
-
 );
 
 }
@@ -250,49 +173,7 @@ alert(
 }
 
 </script>
-<script>
 
-let user=
-localStorage.getItem("carpoolUser");
-
-if(user){
-
-let nav=
-document.getElementById("userArea");
-
-if(nav){
-
-nav.innerHTML=
-`
-👋 Hello, ${user}
-|
-<button
-onclick="logoutUser()"
-style="
-border:none;
-background:none;
-color:black;
-">
-Logout
-</button>
-`;
-
-}
-
-}
-
-function logoutUser(){
-
-localStorage.removeItem(
-"carpoolUser"
-);
-
-window.location=
-"login.html";
-
-}
-
-</script>
 </body>
 
 </html>
