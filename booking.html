@@ -40,11 +40,7 @@ href="index.html">
 
 <div class="login-card">
 
-<h2>
-
-Confirm Ride
-
-</h2>
+<h2>Confirm Ride</h2>
 
 <input
 id="name"
@@ -58,9 +54,17 @@ placeholder="Phone">
 
 <select id="vehicle">
 
-<option value="18">SUV (18 km/L)</option>
-<option value="22">Sedan (22 km/L)</option>
-<option value="30">Bike (30 km/L)</option>
+<option value="18">
+SUV (18 km/L)
+</option>
+
+<option value="22">
+Sedan (22 km/L)
+</option>
+
+<option value="30">
+Bike (30 km/L)
+</option>
 
 </select>
 
@@ -103,81 +107,141 @@ Confirm Booking
 document
 .getElementById("distance")
 .addEventListener(
-
 "input",
-
 calculate
-
 );
 
 document
 .getElementById("vehicle")
 .addEventListener(
-
 "change",
-
 calculate
-
 );
 
 function calculate(){
 
 let distance =
 Number(
-document.getElementById("distance").value
+document.getElementById(
+"distance"
+).value
 );
 
 let mileage =
 Number(
-document.getElementById("vehicle").value
+document.getElementById(
+"vehicle"
+).value
 );
 
+if(!distance){
+
+distance=0;
+
+}
+
 let fuel =
-(distance/mileage).toFixed(1);
+(distance/mileage);
 
 let cost =
-(fuel*100).toFixed(0);
+fuel*100;
 
 let co2 =
-(fuel*2.3).toFixed(1);
+fuel*2.3;
 
 document.getElementById(
 "fuel"
-).innerHTML=
-"🚗 Fuel Used: "+fuel+" L";
+).innerText=
+"🚗 Fuel Used: "
++
+fuel.toFixed(1)
++
+" L";
 
 document.getElementById(
 "cost"
-).innerHTML=
-"💸 Fuel Cost: ₹"+cost;
+).innerText=
+"💸 Fuel Cost: ₹"
++
+cost.toFixed(0);
 
 document.getElementById(
 "co2"
-).innerHTML=
-"🌱 CO₂: "+co2+" kg";
+).innerText=
+"🌱 CO₂: "
++
+co2.toFixed(1)
++
+" kg";
 
 }
 
 
 async function confirmBooking(){
 
+try{
+
 let name =
-document.getElementById("name").value;
+document.getElementById(
+"name"
+).value;
 
 let phone =
-document.getElementById("phone").value;
+document.getElementById(
+"phone"
+).value;
 
 let distance =
-document.getElementById("distance").value;
+Number(
+document.getElementById(
+"distance"
+).value
+);
 
 let fuel =
-document.getElementById("fuel").innerText;
+parseFloat(
+document
+.getElementById(
+"fuel"
+)
+.innerText
+.replace(/[^\d.]/g,"")
+);
 
 let cost =
-document.getElementById("cost").innerText;
+parseFloat(
+document
+.getElementById(
+"cost"
+)
+.innerText
+.replace(/[^\d.]/g,"")
+);
 
 let co2 =
-document.getElementById("co2").innerText;
+parseFloat(
+document
+.getElementById(
+"co2"
+)
+.innerText
+.replace(/[^\d.]/g,"")
+);
+
+
+if(
+!name||
+!phone||
+!distance
+){
+
+alert(
+"Fill all fields"
+);
+
+return;
+
+}
 
 
 let response =
@@ -190,10 +254,14 @@ await fetch(
 method:"POST",
 
 headers:{
-"Content-Type":"application/json"
+
+"Content-Type":
+"application/json"
+
 },
 
-body:JSON.stringify({
+body:
+JSON.stringify({
 
 name,
 phone,
@@ -208,6 +276,7 @@ co2
 
 );
 
+
 let data =
 await response.json();
 
@@ -215,10 +284,23 @@ alert(
 data.message
 );
 
-if(response.ok){
+
+if(
+data.message==="Ride Confirmed"
+){
 
 window.location.href=
 "history.html";
+
+}
+
+}
+
+catch{
+
+alert(
+"Booking Failed"
+);
 
 }
 
