@@ -10,7 +10,7 @@ app.use(express.json());
 
 
 mongoose.connect(
-"mongodb://localhost:27017/carpoolconnect",
+process.env.MONGO_URI,
 {
 serverSelectionTimeoutMS:5000
 }
@@ -32,9 +32,6 @@ err.message
 );
 
 });
-
-
-
 
 const User = mongoose.model(
 
