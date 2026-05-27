@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 
 <meta charset="UTF-8">
 
 <meta name="viewport"
-content="width=device-width,initial-scale=1.0">
+content="width=device-width, initial-scale=1.0">
 
 <title>Role | CarPool Connect</title>
 
@@ -28,12 +28,9 @@ if(
 "carpoolUser"
 )
 ){
-
-window.location=
+window.location.href =
 "login.html";
-
 }
-
 
 function logout(){
 
@@ -41,17 +38,9 @@ localStorage.removeItem(
 "carpoolUser"
 );
 
-localStorage.removeItem(
-"rides"
-);
-
-localStorage.removeItem(
-"bookings"
-);
-
 sessionStorage.clear();
 
-window.location.href=
+window.location.href =
 "login.html";
 
 }
@@ -84,53 +73,51 @@ Logout
 </nav>
 
 
-<section
-class="login-section">
+<section class="hero-section">
 
-<div
-class="text-center">
+<div class="container text-center">
 
-<h1>
+<h1 class="display-4">
 
 Welcome
 
 </h1>
 
-<h2>
+<p class="lead">
 
 Choose Option
 
-</h2>
+</p>
 
 <br>
 
+<div class="d-grid gap-3 col-4 mx-auto">
+
 <a
 href="postRide.html"
-class="btn btn-success">
+class="btn btn-success btn-lg">
 
 Post Ride
 
 </a>
 
-<br><br>
-
 <a
 href="searchRide.html"
-class="btn btn-primary">
+class="btn btn-primary btn-lg">
 
 Search Ride
 
 </a>
 
-<br><br>
-
 <a
 href="history.html"
-class="btn btn-dark">
+class="btn btn-dark btn-lg">
 
 Ride History
 
 </a>
+
+</div>
 
 </div>
 
