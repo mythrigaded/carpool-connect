@@ -8,326 +8,184 @@ app.use(cors());
 app.use(express.json());
 
 
-
+// MongoDB Connection
 mongoose.connect(
 process.env.MONGO_URI,
 {
-serverSelectionTimeoutMS:5000
+serverSelectionTimeoutMS: 5000
 }
 )
 
-.then(()=>{
-
-console.log(
-"✅ Mongo Connected"
-);
-
+.then(() => {
+console.log("✅ Mongo Connected");
 })
 
-.catch((err)=>{
-
-console.log(
-"Mongo Error:",
-err.message
-);
-
+.catch((err) => {
+console.log("Mongo Error:", err.message);
 });
 
+
+// Models
 const User = mongoose.model(
-
 "User",
-
 {
-
-name:String,
-
-email:String,
-
-phone:String,
-
-password:String
-
+name: String,
+email: String,
+phone: String,
+password: String
 }
-
 );
-
-
 
 const Ride = mongoose.model(
-
 "Ride",
-
 {
-
-driver:String,
-
-vehicle:String,
-
-pickup:String,
-
-destination:String,
-
-seats:String,
-
-price:String
-
+driver: String,
+vehicle: String,
+pickup: String,
+destination: String,
+seats: String,
+price: String
 }
-
 );
-
-
 
 const Booking = mongoose.model(
-
 "Booking",
-
 {
-
-name:String,
-
-phone:String,
-
-distance:Number,
-
-fuel:Number,
-
-cost:Number,
-
-co2:Number,
-
-time:Date
-
+name: String,
+phone: String,
+distance: Number,
+fuel: Number,
+cost: Number,
+co2: Number,
+time: Date
 }
-
 );
 
 
-
-
-app.get("/",(req,res)=>{
-
-res.send(
-"🚗 Backend Running"
-);
-
+// Test
+app.get("/", (req, res) => {
+res.send("🚗 Backend Running");
 });
 
 
+// Register
+app.post("/register", async (req, res) => {
 
+try {
 
-app.post(
-
-"/register",
-
-async(req,res)=>{
-
-try{
-
-await User.create(
-req.body
-);
+await User.create(req.body);
 
 res.json({
-
-message:
-
-"✅ Registration Successful"
-
+message: "✅ Registration Successful"
 });
 
 }
 
-catch{
+catch (err) {
+
+res.status(500).json({
+message: "Registration Failed"
+});
+
+}
+
+});
+
+
+// Login
+app.post("/login", async (req, res) => {
+
+try {
+
+let found = await User.findOne({
+email: req.body.email,
+password: req.body.password
+});
 
 res.json({
-
-message:
-
-"Registration Failed"
-
+success: !!found,
+name: found?.name
 });
 
 }
 
-}
-
-);
-
-
-
-
-app.post(
-
-"/login",
-
-async(req,res)=>{
-
-try{
-
-let found=
-
-await User.findOne({
-
-email:
-req.body.email,
-
-password:
-req.body.password
-
-});
-
-
+catch {
 
 res.json({
-
-success:
-!!found,
-
-name:
-found?.name
-
+success: false
 });
 
 }
 
-catch{
+});
+
+
+// Post Ride
+app.post("/ride", async (req, res) => {
+
+try {
+
+await Ride.create(req.body);
 
 res.json({
-
-success:false
-
+message: "Ride Posted"
 });
 
 }
 
-}
-
-);
-
-
-
-
-app.post(
-
-"/ride",
-
-async(req,res)=>{
-
-try{
-
-await Ride.create(
-req.body
-);
+catch {
 
 res.json({
-
-message:
-
-"Ride Posted"
-
+message: "Failed"
 });
 
 }
 
-catch{
+});
 
-res.json({
 
-message:
+// Get Rides
+app.get("/rides", async (req, res) => {
 
-"Failed"
+let rides = await Ride.find();
+
+res.json(rides);
 
 });
 
-}
 
-}
+// Booking
+app.post("/book", async (req, res) => {
 
-);
-
-
-
-
-app.get(
-
-"/rides",
-
-async(req,res)=>{
-
-let rides=
-
-await Ride.find();
-
-res.json(
-rides
-);
-
-}
-
-);
-
-
-
-
-app.post(
-
-"/book",
-
-async(req,res)=>{
-
-try{
+try {
 
 await Booking.create({
-
 ...req.body,
-
-time:new Date()
-
+time: new Date()
 });
-
-
 
 res.json({
-
-message:
-
-"Ride Confirmed"
-
+message: "Ride Confirmed"
 });
 
 }
 
-catch{
+catch {
 
 res.json({
-
-message:
-
-"Booking Failed"
-
+message: "Booking Failed"
 });
 
 }
 
-}
-
-);
+});
 
 
+// Server
+const PORT = process.env.PORT || 3000;
 
+app.listen(PORT, () => {
 
-app.listen(
+console.log(`🚗 Backend running on ${PORT}`);
 
-3000,
-
-()=>{
-
-console.log(
-
-"🚗 Backend running"
-
-);
-
-}
-
-);
+});
