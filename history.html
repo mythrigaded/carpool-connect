@@ -3,106 +3,28 @@
 
 <head>
 
-<meta charset="UTF-8">
-
 <title>Ride History</title>
 
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet"
+href="css/style.css">
 
-<style>
-
-body{
-
-font-family:Poppins,sans-serif;
-
-background:#f6fff8;
-
-margin:0;
-
-padding:50px;
-
-}
-
-.container{
-
-max-width:900px;
-
-margin:auto;
-
-}
-
-.title{
-
-text-align:center;
-
-margin-bottom:50px;
-
-}
-
-.section{
-
-background:white;
-
-padding:30px;
-
-border-radius:20px;
-
-margin-bottom:30px;
-
-box-shadow:0 8px 20px rgba(0,0,0,.08);
-
-}
-
-.section h2{
-
-margin-bottom:20px;
-
-color:#198754;
-
-}
-
-.ride{
-
-background:#f8fff8;
-
-padding:20px;
-
-border-radius:15px;
-
-margin-top:15px;
-
-line-height:1.8;
-
-}
-
-.empty{
-
-color:gray;
-
-}
-
-</style>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+rel="stylesheet">
 
 </head>
 
-
 <body>
 
-<div class="container">
+<div class="container mt-5">
 
-<div class="title">
-
-<h1>
+<h1 class="text-center mb-5">
 
 Ride History
 
 </h1>
 
-</div>
 
-
-
-<div class="section">
+<div class="card p-4 mb-4">
 
 <h2>
 
@@ -119,8 +41,7 @@ Loading...
 </div>
 
 
-
-<div class="section">
+<div class="card p-4">
 
 <h2>
 
@@ -128,112 +49,90 @@ Rides Taken By You
 
 </h2>
 
-<div id="taken">
+<div id="booked">
 
-No rides booked
+Loading...
+
+</div>
 
 </div>
 
 </div>
-
-
-</div>
-
 
 
 <script>
 
 async function loadHistory(){
 
-let user=
-
-localStorage.getItem(
-"carpoolUser"
-);
-
-
+try{
 
 let response=
-
 await fetch(
-
-"http://https://carpoolconnect-backend.onrender.com/rides"
-
+"https://carpool-backend-t4ar.onrender.com/rides"
 );
-
-
 
 let rides=
-
 await response.json();
 
-
-
-let myRides=
-
-rides.filter(
-
-r=>
-
-r.driver===user
-
+let posted=
+document.getElementById(
+"posted"
 );
 
+if(
+rides.length===0
+){
 
+posted.innerHTML=
+"No rides posted";
 
-let html="";
+return;
 
+}
 
+posted.innerHTML="";
 
-myRides.forEach(r=>{
+rides.forEach(
 
-html+=`
+ride=>{
 
-<div class="ride">
+posted.innerHTML+=`
 
-Pickup:
+<div
+style="
+padding:10px;
+border-bottom:1px solid #ddd;
+">
 
-${r.pickup}
+<b>${ride.driver}</b>
 
 <br>
 
-Destination:
+${ride.pickup}
 
-${r.destination}
+→
+
+${ride.destination}
 
 <br>
 
 Seats:
-
-${r.seats}
+${ride.seats}
 
 <br>
 
-Price:
-
-₹${r.price}
+₹${ride.price}
 
 </div>
 
 `;
 
-});
-
-
-
-if(html===""){
-
-html=
-
-`<div class="empty">
-
-No rides posted
-
-</div>`;
-
 }
 
+);
 
+}
+catch{
 
 document
 .getElementById(
@@ -241,214 +140,24 @@ document
 )
 .innerHTML=
 
-html;
-
-
-
-let booked=
-
-JSON.parse(
-
-localStorage.getItem(
-
-"bookedRides"
-
-)
-
-||
-
-"[]"
-
-);
-
-
-
-let taken="";
-
-
-
-booked.forEach(r=>{
-
-taken+=`
-
-<div class="ride">
-
-${r.pickup}
-
-→
-
-${r.destination}
-
-</div>
-
-`;
-
-});
-
-
-
-if(taken===""){
-
-taken=
-
-`<div class="empty">
-
-No rides booked
-
-</div>`;
+"Cannot load rides";
 
 }
-
-
 
 document
 .getElementById(
-"taken"
+"booked"
 )
 .innerHTML=
 
-taken;
+"Bookings saved";
 
 }
-
-
 
 loadHistory();
 
 </script>
-<script>
 
-let user=
-localStorage.getItem("carpoolUser");
-
-if(user){
-
-let nav=
-document.getElementById("userArea");
-
-if(nav){
-
-nav.innerHTML=
-`
-👋 Hello, ${user}
-|
-<button
-onclick="logoutUser()"
-style="
-border:none;
-background:none;
-color:black;
-">
-Logout
-</button>
-`;
-
-}
-
-}
-
-function logoutUser(){
-
-localStorage.removeItem(
-"carpoolUser"
-);
-
-window.location=
-"login.html";
-
-}
-
-</script>
-<script>
-
-function navbar(){
-
-let user=
-
-localStorage.getItem(
-"carpoolUser"
-);
-
-let area=
-
-document.getElementById(
-"userArea"
-);
-
-if(!area)
-return;
-
-
-if(user){
-
-area.innerHTML=
-
-`
-👋 Hello ${user}
-
-<button
-
-onclick="logout()"
-
-style="
-margin-left:10px;
-background:#dc3545;
-color:white;
-border:none;
-padding:8px 14px;
-border-radius:8px;
-">
-
-Logout
-
-</button>
-`;
-
-}
-
-else{
-
-area.innerHTML=
-
-`
-
-<a
-class="login-btn"
-href="login.html">
-
-Login
-
-</a>
-
-`;
-
-}
-
-}
-
-
-
-function logout(){
-
-localStorage.removeItem(
-"carpoolUser"
-);
-
-localStorage.removeItem(
-"role"
-);
-
-window.location=
-
-"index.html";
-
-}
-
-
-
-navbar();
-
-</script>
 </body>
 
-</html>         
+</html>
