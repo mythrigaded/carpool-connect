@@ -1,21 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 
 <meta charset="UTF-8">
 
-<meta name="viewport"
-content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Role | CarPool Connect</title>
 
-<link rel="stylesheet"
-href="css/style.css">
+<link rel="stylesheet" href="css/style.css">
 
-<link
-href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
 </head>
 
@@ -23,36 +19,23 @@ rel="stylesheet">
 
 <script>
 
-if(
-!localStorage.getItem(
-"carpoolUser"
-)
-){
-
-window.location=
-"login.html";
-
+if (!localStorage.getItem("carpoolUser")) {
+window.location.href="login.html";
 }
-
 
 function logout(){
 
-localStorage.removeItem(
-"carpoolUser"
-);
+localStorage.removeItem("carpoolUser");
 
-localStorage.removeItem(
-"rides"
-);
+localStorage.removeItem("rides");
 
-localStorage.removeItem(
-"bookings"
-);
+localStorage.removeItem("bookings");
+
+localStorage.removeItem("selectedRide");
 
 sessionStorage.clear();
 
-window.location.href=
-"login.html";
+window.location.href="index.html";
 
 }
 
@@ -63,9 +46,7 @@ window.location.href=
 
 <div class="container">
 
-<a
-class="navbar-brand brand-logo"
-href="index.html">
+<a class="navbar-brand brand-logo" href="index.html">
 
 🚗 CarPool Connect
 
@@ -84,53 +65,52 @@ Logout
 </nav>
 
 
-<section
-class="login-section">
+<section class="login-section">
 
-<div
-class="text-center">
+<div class="container text-center">
 
-<h1>
+<h1 class="mb-3">
 
 Welcome
 
 </h1>
 
-<h2>
+<h2 class="mb-5">
 
 Choose Option
 
 </h2>
 
-<br>
+
+<div class="d-grid gap-3 col-md-4 mx-auto">
 
 <a
 href="postRide.html"
-class="btn btn-success">
+class="btn btn-success btn-lg">
 
 Post Ride
 
 </a>
 
-<br><br>
 
 <a
 href="searchRide.html"
-class="btn btn-primary">
+class="btn btn-primary btn-lg">
 
 Search Ride
 
 </a>
 
-<br><br>
 
 <a
 href="history.html"
-class="btn btn-dark">
+class="btn btn-dark btn-lg">
 
 Ride History
 
 </a>
+
+</div>
 
 </div>
 
