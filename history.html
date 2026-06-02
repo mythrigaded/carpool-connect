@@ -165,12 +165,79 @@ document
 
 }
 
-document
-.getElementById(
+try{
+
+let bookingResponse =
+await fetch(
+"https://carpool-backend-t4ar.onrender.com/bookings"
+);
+
+let bookings =
+await bookingResponse.json();
+
+let myBookings =
+bookings.filter(
+b => b.name === currentUser
+);
+
+let booked =
+document.getElementById(
 "booked"
-)
-.innerHTML=
+);
+
+booked.innerHTML = "";
+
+if(myBookings.length===0){
+
+booked.innerHTML =
 "No rides booked";
+
+}
+else{
+
+myBookings.forEach(b=>{
+
+booked.innerHTML += `
+
+<div>
+
+<b>${b.name}</b>
+
+<br>
+
+Distance: ${b.distance} km
+
+<br>
+
+Fuel: ${b.fuel} L
+
+<br>
+
+CO₂: ${b.co2} kg
+
+<br>
+
+Cost: ₹${b.cost}
+
+<hr>
+
+</div>
+
+`;
+
+});
+
+}
+
+}
+catch{
+
+document.getElementById(
+"booked"
+).innerHTML =
+"Cannot load bookings";
+
+}
 
 }
 
