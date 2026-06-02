@@ -240,7 +240,6 @@ Save money
 </section>
 
 
-
 <section
 style="
 padding:70px 20px;
@@ -263,78 +262,44 @@ font-weight:700;
 <div class="row g-4 mb-5">
 
 <div class="col-md-3">
-
 <div class="card border-0 shadow-lg text-center p-4">
-
-<h6>🚗 Shared Rides</h6>
-
-<h2 style="color:#2563eb;">
-58
-</h2>
-
+<h6>🚗 Rides Posted</h6>
+<h2 style="color:#2563eb;">4</h2>
 </div>
-
 </div>
 
 <div class="col-md-3">
-
 <div class="card border-0 shadow-lg text-center p-4">
+<h6>🚕 Rides Taken</h6>
+<h2 style="color:#7c3aed;">6</h2>
+</div>
+</div>
 
+<div class="col-md-3">
+<div class="card border-0 shadow-lg text-center p-4">
 <h6>🌱 CO₂ Saved</h6>
-
-<h2 style="color:#16a34a;">
-124 kg
-</h2>
-
+<h2 style="color:#16a34a;">23.5 kg</h2>
 </div>
-
 </div>
 
 <div class="col-md-3">
-
 <div class="card border-0 shadow-lg text-center p-4">
-
 <h6>⛽ Fuel Saved</h6>
-
-<h2 style="color:#f59e0b;">
-47 L
-</h2>
-
+<h2 style="color:#f59e0b;">10.3 L</h2>
+</div>
 </div>
 
 </div>
 
-<div class="col-md-3">
+<div class="card border-0 shadow-lg p-4">
 
-<div class="card border-0 shadow-lg text-center p-4">
+<h4 class="text-center mb-4">
 
-<h6>💰 Money Saved</h6>
-
-<h2 style="color:#7c3aed;">
-₹8,200
-</h2>
-
-</div>
-
-</div>
-
-</div>
-
-<div
-class="card border-0 shadow-lg p-4">
-
-<h4
-class="text-center mb-4">
-
-Growth Analytics
+CarPool Performance Overview
 
 </h4>
 
-<canvas
-id="impactChart"
-height="100">
-
-</canvas>
+<canvas id="impactChart" height="100"></canvas>
 
 </div>
 
@@ -346,10 +311,8 @@ height="100">
 
 <script>
 
-const ctx = document
-.getElementById(
-'impactChart'
-);
+const ctx =
+document.getElementById('impactChart');
 
 new Chart(ctx, {
 
@@ -358,33 +321,43 @@ type:'bar',
 data:{
 
 labels:[
+'Posted',
+'Taken',
 'CO₂ Saved',
-'Fuel Saved',
-'Money Saved',
-'Shared Rides'
+'Fuel Saved'
 ],
 
 datasets:[{
 
-label:'Impact Score',
+label:'Statistics',
 
 data:[
-124,
-47,
-82,
-58
+4,
+6,
+23.5,
+10.3
 ],
 
 backgroundColor:[
 
-'#16a34a',
-'#f59e0b',
-'#7c3aed',
-'#2563eb'
+'rgba(37,99,235,0.8)',
+'rgba(124,58,237,0.8)',
+'rgba(22,163,74,0.8)',
+'rgba(245,158,11,0.8)'
 
 ],
 
-borderRadius:12
+borderColor:[
+
+'#2563eb',
+'#7c3aed',
+'#16a34a',
+'#f59e0b'
+
+],
+
+borderWidth:2,
+borderRadius:15
 
 }]
 
@@ -406,7 +379,19 @@ scales:{
 
 y:{
 
-beginAtZero:true
+beginAtZero:true,
+
+grid:{
+color:'#e5e7eb'
+}
+
+},
+
+x:{
+
+grid:{
+display:false
+}
 
 }
 
