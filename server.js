@@ -9,6 +9,7 @@ app.use(express.json());
 
 
 // MongoDB Connection
+
 mongoose.connect(
 process.env.MONGO_URI,
 {
@@ -26,6 +27,7 @@ console.log("Mongo Error:", err.message);
 
 
 // Models
+
 const User = mongoose.model(
 "User",
 {
@@ -62,13 +64,15 @@ time: Date
 );
 
 
-// Test
+// Test Route
+
 app.get("/", (req, res) => {
 res.send("🚗 Backend Running");
 });
 
 
 // Register
+
 app.post("/register", async (req, res) => {
 
 try {
@@ -81,7 +85,7 @@ message: "✅ Registration Successful"
 
 }
 
-catch (err) {
+catch {
 
 res.status(500).json({
 message: "Registration Failed"
@@ -93,6 +97,7 @@ message: "Registration Failed"
 
 
 // Login
+
 app.post("/login", async (req, res) => {
 
 try {
@@ -121,6 +126,7 @@ success: false
 
 
 // Post Ride
+
 app.post("/ride", async (req, res) => {
 
 try {
@@ -144,7 +150,8 @@ message: "Failed"
 });
 
 
-// Get Rides
+// Get All Rides
+
 app.get("/rides", async (req, res) => {
 
 let rides = await Ride.find();
@@ -154,59 +161,78 @@ res.json(rides);
 });
 
 
-// Booking
-app.post(
-"/book",
+// Book Ride
 
-async(req,res)=>{
+app.post("/book", async (req, res) => {
 
-try{
+try {
 
 await Booking.create({
 
-name:req.body.name,
+name: req.body.name,
 
-phone:req.body.phone,
+phone: req.body.phone,
 
-distance:Number(req.body.distance),
+distance: Number(req.body.distance),
 
-fuel:Number(req.body.fuel),
+fuel: Number(req.body.fuel),
 
-cost:Number(req.body.cost),
+cost: Number(req.body.cost),
 
-co2:Number(req.body.co2),
+co2: Number(req.body.co2),
 
-time:new Date()
+time: new Date()
 
 });
 
 res.json({
 
-message:
-"✅ Ride Confirmed"
+message: "✅ Ride Confirmed"
 
 });
 
 }
 
-catch(err){
+catch (err) {
 
 console.log(err);
 
 res.status(500).json({
 
-message:
-"Booking Failed"
+message: "Booking Failed"
 
 });
 
 }
 
+});
+
+
+// Get All Bookings
+
+app.get("/bookings", async (req, res) => {
+
+try {
+
+let bookings = await Booking.find();
+
+res.json(bookings);
+
 }
 
-);
+catch (err) {
+
+console.log(err);
+
+res.status(500).json([]);
+
+}
+
+});
+
 
 // Server
+
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
